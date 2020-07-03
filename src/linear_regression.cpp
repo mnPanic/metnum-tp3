@@ -8,18 +8,22 @@
 using namespace std;
 namespace py=pybind11;
 
-LinearRegression::LinearRegression()
-{
+LinearRegression::LinearRegression(): x(){}
+
+void LinearRegression::fit(Matrix X, Matrix y) {
+    // Resolvemos con ecuaciones normales
+    //   AtA x = At y
+    //       x = AtA^{-1} At y
+
+    // TODO: Hacer sin invertir?
+    Matrix Xt = X.transpose();
+    this->x = (Xt*X).inverse() * Xt*y;
 }
 
-void LinearRegression::fit(Matrix X, Matrix y)
-{
+Matrix LinearRegression::predict(Matrix X) {
+    return X*x;
 }
 
-
-Matrix LinearRegression::predict(Matrix X)
-{
-    auto ret = MatrixXd::Zero(X.rows(), 1);
-
-    return ret;
+Matrix LinearRegression::get_x() {
+    return x;
 }

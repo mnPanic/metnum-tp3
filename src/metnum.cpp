@@ -9,5 +9,6 @@ PYBIND11_MODULE(metnum, m) {
     py::class_<LinearRegression>(m, "LinearRegression")
         .def(py::init<>())
         .def("fit", &LinearRegression::fit)
-        .def("predict", &LinearRegression::predict);
+        .def("predict", &LinearRegression::predict)
+        .def("get_x", &LinearRegression::get_x);
 }
