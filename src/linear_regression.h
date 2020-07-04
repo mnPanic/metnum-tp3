@@ -35,6 +35,16 @@ public:
             .
             .
             y_n     # precio|feature n
+    
+    Podria ser lo siguiente, donde las funciones son proyecciones
+
+        A = x_1     y_1     w_1
+            x_2     y_2     w_2
+            .
+            .
+            .
+            x_n     y_n     w_n
+
     */
 
     // Fitea el modelo lineal
