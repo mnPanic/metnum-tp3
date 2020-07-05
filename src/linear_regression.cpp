@@ -13,11 +13,11 @@ LinearRegression::LinearRegression(): x(){}
 void LinearRegression::fit(Matrix X, Matrix y) {
     // Resolvemos con ecuaciones normales
     //   AtA x = At y
-    //       x = AtA^{-1} At y
-
-    // TODO: Hacer sin invertir?
+    
+    // https://eigen.tuxfamily.org/dox/group__TutorialLinearAlgebra.html
+    // Uso QR con Householder porque es simple
     Matrix Xt = X.transpose();
-    this->x = (Xt*X).inverse() * Xt*y;
+    this->x = (Xt*X).colPivHouseholderQr().solve(Xt*y);
 }
 
 Matrix LinearRegression::predict(Matrix X) {
