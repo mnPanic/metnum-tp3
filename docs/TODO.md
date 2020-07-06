@@ -8,11 +8,10 @@
   - Meta
     - Copiar cross validation
     - Implementar metricas
+      - Metricas RMSE y RMSLE
+      - https://www.investopedia.com/terms/r/r-squared.asp#:~:text=R%2Dsquared%20(R2),variables%20in%20a%20regression%20model
 
   - Modelos para explicar caracteristicas
-    - Metricas RMSE y RMSLE
-    - https://www.investopedia.com/terms/r/r-squared.asp#:~:text=R%2Dsquared%20(R2),variables%20in%20a%20regression%20model.
-
     - Precio
       - **Pensar que features elegir**
       - centros comerciales cercanos
@@ -29,6 +28,11 @@
       - Predecir m2
         - habitaciones, baños (obvio)
 
+    - Proyecciones
+      - Hacer forwards y backwards substitution
+      - Graficar mejora en score over steps
+      - Graficar score over labels (donde las labels son las features tomadas)
+
   - Segmentacion
     - **Proponer ~2**
       - provincia
@@ -44,7 +48,6 @@
         - gym
         - escuelas cercanas
         - piscina
-        - 
 
 - Informe
   - Desarrollo
