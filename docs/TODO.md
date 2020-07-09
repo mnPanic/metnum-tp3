@@ -11,6 +11,9 @@
       - Metricas RMSE y RMSLE
       - https://www.investopedia.com/terms/r/r-squared.asp#:~:text=R%2Dsquared%20(R2),variables%20in%20a%20regression%20model
 
+  - Para los errores, hacer un boxplot
+    - https://ragrawal.wordpress.com/2017/05/06/intuition-behind-r2-and-other-regression-evaluation-metrics/
+
   - Modelos para explicar caracteristicas
     - Precio
       - **Pensar que features elegir**
@@ -48,6 +51,7 @@
         - gym
         - escuelas cercanas
         - piscina
+      - word cloud y algun tipo de NLP
 
 - Informe
   - Desarrollo
