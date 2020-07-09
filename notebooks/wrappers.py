@@ -139,7 +139,7 @@ class RegressionWrapper():
     
     def score(self, df: pd.DataFrame, kind: str) -> float:
         """Shorthand para calcular un solo score"""
-        return self.scores([kind], df).values()[0]
+        return self.scores(df, [kind])[kind]
 
     def scores(self, df: pd.DataFrame, kinds: List[str]) -> Dict[str, float]:
         """
