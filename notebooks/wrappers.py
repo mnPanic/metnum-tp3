@@ -269,7 +269,7 @@ class PolynomialRegressor(RegressionWrapper):
             .                   ...                               ...
             F_11(X_m) F_12(X_m) ... F_1d(X_m) F_21(X_m) F_21(X_m) ... F_nd(X_m)
 
-        A \in R^{m x (n * d)}
+        A in R^{m x (n * d)}
     """
 
     def __init__(
