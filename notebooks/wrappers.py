@@ -253,32 +253,23 @@ class ProyectionRegression(RegressionWrapper):
 
 class PolynomialRegressor(RegressionWrapper):
     """
-    Regresor polinomial del grado especificado, de una sola feature.
+    Regresor polinomial del grado especificado, para multiples features.
     Usa la familia de funciones
 
-        F = {1, x, x^2, ..., x^n}
+        { F_ij(X) = (x_i)**(j-1) :  1 <= i <= n
+                                    ^ 1 <= j <= d } 
     
-    Donde n es el grado del polinomio.
-    Esto resulta en una matriz A de la pinta
-        
-        #         a   b   e
-        # X_1     1   2   3
-        # X_2     4   5   9
-        # X_3     2   7   9
+    Donde d es el grado del polinomio, y n el número de features.
+    Sean X_1, ... , X_m, esto resulta en una matriz A de la pinta
 
+            F_11(X_1) F_12(X_1) ... F_1d(X_1) F_21(X_1) F_21(X_1) ... F_nd(X_1)
+            F_11(X_2) F_12(X_2) ... F_1d(X_2) F_21(X_2) F_21(X_2) ... F_nd(X_2)
+            .                   ...                               ...
+        A=  .                   ...                               ...
+            .                   ...                               ...
+            F_11(X_m) F_12(X_m) ... F_1d(X_m) F_21(X_m) F_21(X_m) ... F_nd(X_m)
 
-
-        #         phi_11(X_i) = phi_11((x1,x_2)) = 1
-        #         phi_12(X_i) = phi_12((x1,x_2)) = x1
-
-        #         phi_11(X_1) = phi_11((x1,x_2)) = 1
-        #         phi_12(X_1) = phi_12((x1,x_2)) = x1
-
-
-        #         phi_11(X_1)  phi_12(X_1)  phi_21(X_1)  phi_22(X_1)
-        # A =     phi_11(X_2)  phi_12(X_2)  phi_21(X_2)  phi_22(X_2)
-        #         phi_11(X_3)  phi_12(X_3)  phi_21(X_3)  phi_22(X_3)
-
+        A \in R^{m x (n * d)}
     """
 
     def __init__(
