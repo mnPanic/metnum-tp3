@@ -194,11 +194,11 @@ class RegressionWrapper():
         for kind in kinds:
             scores[kind] = SCORES[kind](y_true, y_pred)
         
-        return scores
+        return scores, pred
 
-class ProyectionRegression(RegressionWrapper):
+class ProjectionRegression(RegressionWrapper):
     """
-    ProyectionRegression implementa un regresor que toma como familia
+    ProjectionRegression implementa un regresor que toma como familia
     de funciones las proyecciones de las features. Esto resulta en
     una matriz A que tiene la siguiente pinta,
 
@@ -219,7 +219,7 @@ class ProyectionRegression(RegressionWrapper):
             **kwargs,
         ):
         """
-        Construye un ProyectionRegression con las features (variables
+        Construye un ProjectionRegression con las features (variables
         independientes) que explican a la independiente.
 
         Los kwargs adicionales son pasados al constructor de 
@@ -227,7 +227,7 @@ class ProyectionRegression(RegressionWrapper):
 
         Ejemplo de uso
         
-            clf = ProyectionRegression(
+            clf = ProjectionRegression(
                 features=['metroscubiertos'], 
                 explain='precio',
             )
@@ -264,9 +264,7 @@ class PolynomialRegressor(RegressionWrapper):
 
             F_11(X_1) F_12(X_1) ... F_1d(X_1) F_21(X_1) F_21(X_1) ... F_nd(X_1)
             F_11(X_2) F_12(X_2) ... F_1d(X_2) F_21(X_2) F_21(X_2) ... F_nd(X_2)
-            .                   ...                               ...
-        A=  .                   ...                               ...
-            .                   ...                               ...
+        A = .                   ...                               ...
             F_11(X_m) F_12(X_m) ... F_1d(X_m) F_21(X_m) F_21(X_m) ... F_nd(X_m)
 
         A in R^{m x (n * d)}
