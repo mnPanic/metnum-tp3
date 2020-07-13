@@ -11,6 +11,11 @@ from typing import Callable
 Matrix = np.array
 Vector = np.array
 
+# Utils
+def segment_by_col(df: pd.DataFrame, col: str) -> List[pd.DataFrame]:
+    values = df[col].dropna().unique()
+    return [ df[ df[col]==value ].copy() for value in values ]
+
 # Metricas
 def rmse(y_true, y_pred):
     return sklearn.metrics.mean_squared_error(y_true, y_pred, squared=False)
@@ -105,11 +110,12 @@ class RegressionWrapper():
 
             self._clfs.append(clf)
 
-    def predict(self, df: pd.DataFrame) -> pd.DataFrame:
+    def predict(self, df_orig: pd.DataFrame) -> pd.DataFrame:
         """
         Le agrega al dataframe una columna "prediction" que contiene 
         las predicciones dado lo entrenado.
         """
+        df = df_orig.copy()
 
         self._add_features(df)
         segments = self._segment(df)
@@ -120,7 +126,7 @@ class RegressionWrapper():
             segment[self._predict_col] = self._clfs[i].predict(A)
 
         # Concateno los segmentos manteniendo el orden original
-        return pd.concat(segments)
+        return pd.concat(segments).sort_index()
 
     def _get_b(self, df: pd.DataFrame) -> Vector:
         """
@@ -136,12 +142,22 @@ class RegressionWrapper():
 
         """
         return df[self._explain_col].values.reshape(-1, 1)
-    
-    def score(self, df: pd.DataFrame, kind: str) -> float:
-        """Shorthand para calcular un solo score"""
-        return self.scores(df, [kind])[kind]
 
-    def scores(self, df: pd.DataFrame, kinds: List[str]) -> Dict[str, float]:
+    def get_x(self, i: int = None) -> List[List[float]]:
+        if i is None:
+            return [self._clfs[k].get_x() for k in range(len(self._clfs))]
+        return [self._clfs[i].get_x()]
+    
+    def score(self, df: pd.DataFrame, kind: str) -> (float, pd.DataFrame):
+        """Shorthand para calcular un solo score"""
+        score, _ =  self.scores(df, [kind])
+        return score
+
+    def scores(
+            self,
+            df: pd.DataFrame,
+            kinds: List[str]=None,
+        ) -> (Dict[str, float], pd.DataFrame):
         """
         Scores es un wrapper de predict que calcula los scores.
 
@@ -165,7 +181,14 @@ class RegressionWrapper():
 
         pred = self.predict(df)
         y_pred = pred[self._predict_col].values
-        y_true = pred[self._explain_col].values
+
+        # Filtramos predicciones negativas.
+        negativos = np.argwhere(y_pred < 0)
+        y_pred = np.delete(y_pred, negativos)
+        y_true = np.delete(pred[self._explain_col].values, negativos)
+
+        if kinds is None:
+            kinds = SCORES.keys()
 
         scores = dict.fromkeys(kinds)
         for kind in kinds:
@@ -237,25 +260,43 @@ class PolynomialRegressor(RegressionWrapper):
     
     Donde n es el grado del polinomio.
     Esto resulta en una matriz A de la pinta
+        
+        #         a   b   e
+        # X_1     1   2   3
+        # X_2     4   5   9
+        # X_3     2   7   9
+
+
+
+        #         phi_11(X_i) = phi_11((x1,x_2)) = 1
+        #         phi_12(X_i) = phi_12((x1,x_2)) = x1
+
+        #         phi_11(X_1) = phi_11((x1,x_2)) = 1
+        #         phi_12(X_1) = phi_12((x1,x_2)) = x1
+
+
+        #         phi_11(X_1)  phi_12(X_1)  phi_21(X_1)  phi_22(X_1)
+        # A =     phi_11(X_2)  phi_12(X_2)  phi_21(X_2)  phi_22(X_2)
+        #         phi_11(X_3)  phi_12(X_3)  phi_21(X_3)  phi_22(X_3)
+
     """
 
     def __init__(
             self, 
-            feature: str,
+            features: List[str],
             degree: int,
             **kwargs,
         ):
-    
+
         def get_A(df: pd.DataFrame) -> Matrix:
-            return np.stack(
-                [df[feature].values**n for n in range(0, degree+1)], 
-                axis=-1,    # para que los stackee como columnas
-            )
+            cols = []
+            for f in features:
+                cols.extend(
+                    [df[f].values**n for n in range(0, degree+1)]
+                )
+            return np.stack(cols, axis=-1)
 
         super().__init__(
             func_get_A=get_A,
             **kwargs
         )
-
-    def get_x(self, i: int):
-        return self._clfs[i].get_x()
