@@ -26,3 +26,5 @@ Segmentacion
 
 - Como garantizar el orden de los resultados
 > pd.merge
+
+- Booleanos son variables categoricas?
