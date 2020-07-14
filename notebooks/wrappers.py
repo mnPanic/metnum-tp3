@@ -150,8 +150,8 @@ class RegressionWrapper():
     
     def score(self, df: pd.DataFrame, kind: str) -> (float, pd.DataFrame):
         """Shorthand para calcular un solo score"""
-        score, _ =  self.scores(df, [kind])
-        return score
+        scores, df_pred =  self.scores(df, [kind])
+        return scores[kind], df_pred
 
     def scores(
             self,
@@ -179,13 +179,13 @@ class RegressionWrapper():
             "rmsle": rmsle,
         }
 
-        pred = self.predict(df)
-        y_pred = pred[self._predict_col].values
+        df_pred = self.predict(df)
+        y_pred = df_pred[self._predict_col].values
 
         # Filtramos predicciones negativas.
         negativos = np.argwhere(y_pred < 0)
         y_pred = np.delete(y_pred, negativos)
-        y_true = np.delete(pred[self._explain_col].values, negativos)
+        y_true = np.delete(df_pred[self._explain_col].values, negativos)
 
         if kinds is None:
             kinds = SCORES.keys()
@@ -194,7 +194,7 @@ class RegressionWrapper():
         for kind in kinds:
             scores[kind] = SCORES[kind](y_true, y_pred)
         
-        return scores, pred
+        return scores, df_pred
 
 class ProjectionRegression(RegressionWrapper):
     """

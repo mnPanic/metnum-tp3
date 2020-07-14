@@ -5,27 +5,26 @@ import numpy as np
 import pandas as pd
 
 from typing import Dict
-from typing import Callable
-
-ScoringFunc = Callable[[np.ndarray, np.ndarray], float]
+from typing import List
 
 def cross_validate(
         clf: wrappers.RegressionWrapper,
         df: pd.DataFrame,
-        scoring: str,
+        scorings: List[str],
         K: int,
         debug=False, 
         **kwargs
-    ) -> float:
-    """"
-    Hace K fold del classifier `clf`, llamando a la funcion de scoring
-    para calcular los scores de cada fold.
+    ) -> (Dict[str, float], pd.DataFrame):
+    """
+    Hace K fold del classifier `clf`, para cada score.
+    Devuelve un dict scoring:mean_score y ademas el dataframe con todos los
+    resultados.
     """
 
-    scores = []
-    
+    scores = {k: [] for k in scorings}
+    dfs = []
+
     set_size = int(len(df.index)/K)
-    
     for i in range(K):
         # Particionar
         l_bound = set_size * i
@@ -38,8 +37,15 @@ def cross_validate(
         clf.fit(df_train)
 
         # Scoring
-        scores.append(clf.score(df_val, scoring))
+        res, df_pred = clf.scores(df_val, scorings)
+        dfs.append(df_pred)
+        for scoring, value in res.items():
+            scores[scoring].append(value)
     
     if debug: print("scores:", scores)
 
-    return statistics.mean(scores)
+    avgs = dict.fromkeys(scorings, 0.0)
+    for k in avgs.keys():
+        avgs[k] = statistics.mean(scores[k])
+
+    return avgs, pd.concat(dfs)
