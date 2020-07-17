@@ -33,6 +33,18 @@ def fb_poly_linear_seg_by_col(
         func_segment= lambda df: wrappers.segment_by_col(df, seg_col),
     )
 
+def fb_poly_quadratic_seg_by_col(
+        fs: List[str],
+        e: str,
+        seg_col: str,
+    ) -> wrappers.RegressionWrapper:
+    return wrappers.PolynomialRegressor(
+        features = fs,
+        degree = 2,
+        explain = e,
+        func_segment= lambda df: wrappers.segment_by_col(df, seg_col),
+    )
+
 def func_builder_polynomial_d3_sbc(
         fs: List[str],
         e: str,
@@ -45,14 +57,14 @@ def func_builder_polynomial_d3_sbc(
         func_segment= lambda df: wrappers.segment_by_col(df, seg_col),
     )
 
-def func_builder_polynomial_d7_sbc(
+def func_builder_polynomial_d4_sbc(
         fs: List[str],
         e: str,
         seg_col: str,
     ) -> wrappers.RegressionWrapper:
     return wrappers.PolynomialRegressor(
         features = fs,
-        degree = 7,
+        degree = 4,
         explain = e,
         func_segment= lambda df: wrappers.segment_by_col(df, seg_col),
     )
