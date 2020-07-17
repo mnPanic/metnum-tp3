@@ -8,13 +8,61 @@ from typing import Callable
 from typing import List
 from typing import Dict
 
-FuncBuilder = Callable[[List[str], str], wrappers.RegressionWrapper]
+FuncBuilder = Callable[[List[str], str, str], wrappers.RegressionWrapper]
+
+def func_builder_projection_sbc(
+        fs: List[str],
+        e: str,
+        seg_col: str,
+    ) -> wrappers.RegressionWrapper:
+    return wrappers.ProjectionRegression(
+        features = fs,
+        explain = e,
+        func_segment= lambda df: wrappers.segment_by_col(df, seg_col),
+    )
+
+def fb_poly_linear_seg_by_col(
+        fs: List[str],
+        e: str,
+        seg_col: str,
+    ) -> wrappers.RegressionWrapper:
+    return wrappers.PolynomialRegressor(
+        features = fs,
+        degree = 1,
+        explain = e,
+        func_segment= lambda df: wrappers.segment_by_col(df, seg_col),
+    )
+
+def func_builder_polynomial_d3_sbc(
+        fs: List[str],
+        e: str,
+        seg_col: str,
+    ) -> wrappers.RegressionWrapper:
+    return wrappers.PolynomialRegressor(
+        features = fs,
+        degree = 3,
+        explain = e,
+        func_segment= lambda df: wrappers.segment_by_col(df, seg_col),
+    )
+
+def func_builder_polynomial_d7_sbc(
+        fs: List[str],
+        e: str,
+        seg_col: str,
+    ) -> wrappers.RegressionWrapper:
+    return wrappers.PolynomialRegressor(
+        features = fs,
+        degree = 7,
+        explain = e,
+        func_segment= lambda df: wrappers.segment_by_col(df, seg_col),
+    )
 
 def forward_stepwise_selection(
         func_builder: FuncBuilder,
-        df: pd.DataFrame,
+        data: pd.DataFrame,
         fs: List[str],
         e: str,
+        seg_col: str,
         K: int,
     ) -> (List[str], Dict[int, float]):
 
@@ -27,10 +75,10 @@ def forward_stepwise_selection(
         for f in fs:
             tmp_fs = best_fs[-1][:]
             tmp_fs.append(f)
-            clf = func_builder(tmp_fs, e)
-            clf.fit(df)
+            clf = func_builder(tmp_fs, e, seg_col)
+            clf.fit(data)
 
-            feature_score = clf.score(df, "r2")
+            feature_score, _ = clf.score(data, "r2")
 
             if first_check or feature_score > best_score:
                 best_score = feature_score
@@ -39,15 +87,17 @@ def forward_stepwise_selection(
 
         best_fs.append(best_fs[-1] + [best_scoring_feature])
         fs.remove(best_scoring_feature)
-
+    
     scores_by_step = {}
     res_index = 0
     best_score = 0
     first_check = True
     for i in range(len(best_fs)):
-        clf = func_builder(best_fs[i], e)
+        clf = func_builder(best_fs[i], e, seg_col)
 
-        tmp_r2_score = cv.cross_validate(clf, df, "r2", K)
+        r2_scores, _ = cv.cross_validate(clf, data, ["r2"], K)
+        tmp_r2_score = r2_scores["r2"]
+
         scores_by_step[i] = tmp_r2_score
 
         if first_check or tmp_r2_score > best_score:

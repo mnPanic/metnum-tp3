@@ -240,10 +240,13 @@ class ProjectionRegression(RegressionWrapper):
         """
 
         def get_A(df: pd.DataFrame) -> Matrix:
-            return np.stack(
-                [df[feature].values for feature in features], 
-                axis=-1,    # para que los stackee como columnas
-            )
+            if not features:
+                return np.ones((df.shape[0],1))
+            else:
+                return np.stack(
+                    [df[feature].values for feature in features], 
+                    axis=-1,    # para que los stackee como columnas
+                )
 
         super().__init__(
             func_get_A=get_A,
@@ -278,12 +281,15 @@ class PolynomialRegressor(RegressionWrapper):
         ):
 
         def get_A(df: pd.DataFrame) -> Matrix:
-            cols = []
-            for f in features:
-                cols.extend(
-                    [df[f].values**n for n in range(0, degree+1)]
-                )
-            return np.stack(cols, axis=-1)
+            if not features:
+                return np.ones((df.shape[0],1))
+            else:
+                cols = []
+                for f in features:
+                    cols.extend(
+                        [df[f].values**n for n in range(0, degree+1)]
+                    )
+                return np.stack(cols, axis=-1)
 
         super().__init__(
             func_get_A=get_A,
