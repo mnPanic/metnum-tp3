@@ -1,0 +1,13 @@
+,name,kind,explains,segment_by,r2,rmse,rmsle
+0,projection-for_metroscubiertos_by_antiguedad,projection,metroscubiertos,antiguedad,0.6173872809349605,58.53639924989858,0.3475717358539833
+1,linear-for_metroscubiertos_by_antiguedad,linear,metroscubiertos,antiguedad,0.6283866561361039,57.688087196453836,0.33528114732932257
+2,quadratic-for_metroscubiertos_by_antiguedad,quadratic,metroscubiertos,antiguedad,0.6283866561361039,57.688087196453836,0.33528114732932257
+3,projection-for_metroscubiertos_by_tipodepropiedad,projection,metroscubiertos,tipodepropiedad,0.6979606094990912,51.90761011580947,0.2913734708647151
+4,linear-for_metroscubiertos_by_tipodepropiedad,linear,metroscubiertos,tipodepropiedad,0.6949076971576682,52.16794913148849,0.29666126894141454
+5,quadratic-for_metroscubiertos_by_tipodepropiedad,quadratic,metroscubiertos,tipodepropiedad,0.6949076971576682,52.16794913148849,0.29666126894141454
+6,linear-for_metroscubiertos_by_None,linear,metroscubiertos,None,0.6287586489550951,57.57507346257836,0.3313504578105889
+7,quadratic-for_metroscubiertos_by_None,quadratic,metroscubiertos,None,0.40901189980354113,72.6409247189451,0.4626228631018922
+8,projection-for_metroscubiertos_by_None,projection,metroscubiertos,None,0.6166113146143952,58.509415530928926,0.3492250841292842
+9,projection-for_metroscubiertos_by_chetocidad,projection,metroscubiertos,chetocidad,0.5832030545035303,57.415091351673304,0.33828473159747047
+10,linear-for_metroscubiertos_by_chetocidad,linear,metroscubiertos,chetocidad,0.5980718544666159,56.38897698888328,0.3368538241243964
+11,quadratic-for_metroscubiertos_by_chetocidad,quadratic,metroscubiertos,chetocidad,0.5980718544666159,56.38897698888328,0.3368538241243964

@@ -41,6 +41,7 @@
       - provincia
       - tipo de propiedad
     - Ciudad
+    - Antiguedad
 
   - Feature engineering
     - **Armar ~2**
