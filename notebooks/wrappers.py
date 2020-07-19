@@ -24,10 +24,6 @@ def rmsle(y_true, y_pred):
     return np.sqrt(sklearn.metrics.mean_squared_log_error(y_true, y_pred))
 
 # Funciones default
-def _default_add_features(df: pd.DataFrame):
-    """Agrega features modifcando el dataframe por referencia"""
-    pass
-
 def _default_segment(df: pd.DataFrame) -> List[pd.DataFrame]:
     """Devuelve una lista de segmentos del DataFrame"""
 
@@ -76,12 +72,14 @@ class RegressionWrapper():
     def __init__(
             self,
 
+            # cols para hacer dropna
+            cols: List[str],
+
             # columna a explicar, con ella se construye el vector b
             explain: str, # ex. precios
 
             func_get_A: FuncGetA = _default_get_A, 
             func_segment: FuncSegment = _default_segment,
-            func_add_features: FuncAddFeatures = _default_add_features,
 
             # nombre de la columna en la que van las predicciones
             predict_col: str = "prediction",
@@ -92,13 +90,13 @@ class RegressionWrapper():
 
         self._get_A = func_get_A
         self._segment = func_segment
-        self._add_features = func_add_features
+
+        self._cols = cols
 
         # lista de clasificadores, hay uno por segmento
         self._clfs: List[metnum.LinearRegression] = []
 
     def fit(self, df: pd.DataFrame):
-        self._add_features(df)
         segments = self._segment(df)
 
         for segment in segments:
@@ -116,8 +114,6 @@ class RegressionWrapper():
         las predicciones dado lo entrenado.
         """
         df = df_orig.copy()
-
-        self._add_features(df)
         segments = self._segment(df)
 
         # Segmento el dataframe y hago el predict por cada uno
@@ -127,6 +123,10 @@ class RegressionWrapper():
 
         # Concateno los segmentos manteniendo el orden original
         return pd.concat(segments).sort_index()
+
+    def dropna(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Sanitiza las columnas del dataframe"""
+        return df.dropna(subset=self._cols)
 
     def _get_b(self, df: pd.DataFrame) -> Vector:
         """
@@ -250,6 +250,7 @@ class ProjectionRegression(RegressionWrapper):
 
         super().__init__(
             func_get_A=get_A,
+            cols=features,
             **kwargs
         )
 
@@ -293,5 +294,6 @@ class PolynomialRegressor(RegressionWrapper):
 
         super().__init__(
             func_get_A=get_A,
+            cols=features,
             **kwargs
         )
