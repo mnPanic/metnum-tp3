@@ -1,0 +1,26 @@
+,index,name,kind,explains,segment_by,r2,rmse,rmsle
+0,3,linear-for_precio_by_provincia,linear,precio,provincia,0.5419,1191109.9895,0.5043
+1,18,linear-for_precio_by_None,linear,precio,None,0.4512,1307140.9522,0.5536
+2,19,degree 4-for_precio_by_None,degree 4,precio,None,0.4285,1431781.8520,0.5671
+3,11,projection con freqs-for_precio_by_antiguedad,projection con freqs,precio,antiguedad,0.4191,1563665.8240,0.5833
+4,10,projection-for_precio_by_antiguedad,projection,precio,antiguedad,0.4187,1564135.4745,0.5764
+5,17,quadratic-for_precio_by_None,quadratic,precio,None,0.4137,1456341.1900,0.5747
+6,16,projection con freqs-for_precio_by_None,projection con freqs,precio,None,0.4009,1600473.7443,0.5850
+7,15,projection-for_precio_by_None,projection,precio,None,0.3941,1609558.2153,0.5928
+8,24,degree 4-for_precio_by_chetocidad,degree 4,precio,chetocidad,0.3921,1392346.0420,0.5670
+9,4,degree 4-for_precio_by_provincia,degree 4,precio,provincia,0.3892,1463775.4949,0.5861
+10,13,linear-for_precio_by_antiguedad,linear,precio,antiguedad,0.3811,1374499.6945,0.5946
+11,2,quadratic-for_precio_by_provincia,quadratic,precio,provincia,0.3624,1509252.7953,0.5697
+12,1,projection con freqs-for_precio_by_provincia,projection con freqs,precio,provincia,0.3486,1662345.9426,0.5977
+13,22,quadratic-for_precio_by_chetocidad,quadratic,precio,chetocidad,0.3466,1451725.5995,0.6199
+14,23,linear-for_precio_by_chetocidad,linear,precio,chetocidad,0.3423,1444285.9409,0.6493
+15,0,projection-for_precio_by_provincia,projection,precio,provincia,0.3420,1671243.2280,0.5878
+16,20,projection-for_precio_by_chetocidad,projection,precio,chetocidad,0.3348,1572625.8697,0.6009
+17,21,projection con freqs-for_precio_by_chetocidad,projection con freqs,precio,chetocidad,0.3269,1581599.8504,0.6171
+18,8,linear-for_precio_by_ciudad,linear,precio,ciudad,0.2782,1461909.1757,0.6008
+19,12,quadratic-for_precio_by_antiguedad,quadratic,precio,antiguedad,0.2776,1601084.2432,0.5791
+20,5,projection-for_precio_by_ciudad,projection,precio,ciudad,0.2403,1776188.0175,0.6095
+21,6,projection con freqs-for_precio_by_ciudad,projection con freqs,precio,ciudad,0.1658,1853461.1484,0.6400
+22,14,degree 4-for_precio_by_antiguedad,degree 4,precio,antiguedad,-0.9848,2516549.2875,0.5691
+23,7,quadratic-for_precio_by_ciudad,quadratic,precio,ciudad,-4.1010,3718277.8536,0.6969
+24,9,degree 4-for_precio_by_ciudad,degree 4,precio,ciudad,-9267.9664,98474551.6608,0.6953
