@@ -1,0 +1,114 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{xcolor}     % \textcolor
+\usepackage{amsmath}    % 
+\usepackage{caratula}   % caratula del TP
+\usepackage{url}
+
+
+
+\usepackage[ruled,noline]{algorithm2e}
+\usepackage{subcaption}
+
+% Figuras y graficos
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{pgfplotstable}
+
+% Tablas
+\usepackage{xltabular}
+
+\usepackage{amssymb}
+\usepackage{hyperref}
+ 
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}%
+\newcommand{\pint}[1]{\left\langle#1\right\rangle}%
+\newcommand{\fss}{\emph{forward stepwise selection}}
+\newcommand{\cv}{\emph{cross validation}}
+\newcommand{\fe}{\emph{feature engineering}}
+
+\providecommand{\keywords}[1]
+{
+  \small	
+  \textbf{\textit{Keywords---}} #1
+}
+
+% ********************************************************* %
+% ~~~~~~~~         Formato de las páginas         ~~~~~~~~~ %
+% ********************************************************* %
+
+\usepackage{csquotes}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+%\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ - #1}}
+
+\fancyhf{}
+
+\fancyhead[LO]{Sección \rightmark} % \thesection\ 
+\fancyfoot[RO]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\setlength{\hoffset}{-0.8in}
+\setlength{\textwidth}{16cm}
+%\setlength{\hoffset}{-1.1cm}
+%\setlength{\textwidth}{16cm}
+\setlength{\headsep}{0.5cm}
+\setlength{\textheight}{25cm}
+\setlength{\voffset}{-0.7in}
+\setlength{\headwidth}{\textwidth}
+\setlength{\headheight}{13.1pt}
+\renewcommand{\baselinestretch}{1.1}  % line spacing
+
+%**********************************************************%
+
+
+
+
+\begin{document}
+
+\thispagestyle{empty}
+\materia{Métodos Numericos}
+\submateria{Primer Cuatrimestre de 2020}
+\titulo{Trabajo Práctico 3}
+\subtitulo{Metros cuadrados mínimos lineales} % Literal se llama así el TP WeirdChamp tenia que ponerle el nombre real LMAO
+\integrante{Manuel Panichelli}{72/18}{panicmanu@gmail.com}
+\integrante{Tomas Tropea}{115/18}{tomastropeaa@gmail.com}
+\integrante{Ignacio Alonso Rehor}{195/18}{arehor.ignacio@gmail.com}
+
+\maketitle
+\newpage
+
+\thispagestyle{empty}
+\tableofcontents
+
+% Objetivos generales
+
+\newpage 
+
+\input{Abstract}
+
+\input{Introduccion}
+
+\input{Metodologia}
+
+\input{Experimentacion y resultados}
+
+\input{Conclusion}
+
+\begin{thebibliography}{}
+
+\bibitem{islr} 
+Gareth James • Daniela Witten • Trevor Hastie
+Robert Tibshirani
+\textit{
+An Introduction to
+Statistical Learning
+with Applications in R}. 
+
+\end{thebibliography}
+
+\end{document}

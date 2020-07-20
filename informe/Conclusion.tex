@@ -1,0 +1,26 @@
+\section{Trabajos futuros}
+
+\subsection{Perfeccionando análisis titulo y descripción}
+
+Como se puede ver en los resultados para precio (fig. \ref{table:results-precio}) si bien los resultados obtenidos fueron buenos, nuestro acercamiento a scoring para textos tiene una falla fundamental: es miope frente a palabras diferentes con la misma frecuencia. Por ejemplo, si ``caro" y ``barato" tuvieran frecuencia de 10, dos inmuebles con cada uno como titulo respectivamente tendrian el mismo score, cuando seguramente tengan precios asociados diferentes.
+
+Una forma de remediar esto, es mediante un cambio de enfoque. Utilizar conceptos tomados de NLP, para representar a los textos como vectores en el espacio, y luego de alguna forma dividir ese espacio en embeddings. Finalmente, textos que sean parte del mismo, tenderan a tener características similares aún más profundamente que para nuestro acercamiento. A pesar de que excede el alcance de este trabajo, consideramos interesante comentar la idea.
+
+\subsection{Familias de funciones}
+
+Creemos que construir modelos a través de regresiones por proyección, lineales o polinomiales puede resultar ser suficiente en ciertos problemas, sin embargo, puede no ser así. Puede haber casos donde, lo que se quiere describir presenta comportamientos diferentes a los lineales o polinomiales, por ejemplo, cuando se observa una relación oscilatoria, o logarítmica. A futuro podríamos ver si los precios u otra variable pueden ser modelados por familias de funciones más complejas.
+
+\subsection{Refinamiento del conjunto de datos}
+
+Si bien cuadrados mínimos lineales es un método efectivo a la hora de estimar relaciones entre variables, su efectividad se basa, en gran medida, en que los datos usados a la hora de entrenar el modelo, estén distribuidos de manera favorable. Este supuesto se ve afectado con la aparición de \textit{outliers}. Esto se debe a que el método intenta hacer un balance para minimizar el error de todos los datos, en particular, el de los outliers. Esto en cambio, termina teniendo una gran influencia en las soluciones obtenidas por el método. Una posible avenida para explorar, podría ser el reconocimiento y extracción de estos datos, esperando así, una mejora sustancial en la precisión de nuestros modelos.
+
+%. Para ajustar una recta por ejemplo, se observa que al agregar un outlier, la pendiente de la recta se ve afectada bruscamente, resultando en grandes diferencias entre su valor previo y el nuevo al agregar este dato. Se le llama a este problema "efecto palanca", porque puede verse como, en este caso, la recta se ve atraída hacia este outlier, para compensar los errores. Debido a esto, a nivel practico es posible que una medición que introduce un dato lejos de la realidad, tenga un gran impacto en el resultado final, obteniendo un modelo con una mala calidad de predicción. Por estas razones, es importante identificar estos outliers y removerlos, para minimizar el impacto sobre CML.
+    
+
+\section{Conclusión}
+
+En este trabajo, pudimos apreciar las dificultades que se presentan a la hora de diseñar un buen modelo para predecir una variable de un conjunto de datos que no fue \textit{tan} bueno como creíamos. Lo cual nos deja el aprendizaje de que no hay que dar la calidad de los datos por sentado, y siempre hay que analizarlos previo a cualquier entrenamiento.
+
+Asimismo las relaciones entre los fenómenos u observaciones de la vida cotidiana, como pueden ser el precio de inmuebles, no siempre resultan fáciles de analizar. Desde elegir las variables independientes hasta ver sobre que segmentar, se trata de un proceso artesanal, lleno de heurísticas y supuestos. No obstante, no siempre es necesario ahondar en los detalles, y basta con tomar una abstracción tan simple como puede ser una regresión lineal para explicar los datos. Siempre y cuando se hayan segmentado de forma adecuada, con lo cual hay que tener mucho cuidado, de no caer en la trampa que puede ser el \textit{overfitting}. Segmentar demás, tener pocos datos, y que nuestro regresor termine sesgado a los datos de entrenamiento, así realizando predicciones que nada tienen que ver con la realidad.
+
+A pesar de todo esto, en las manos correctas, los regresores junto con CML resultan un método muy poderoso en relación a su complejidad, siendo muy simples. Y tienen la capacidad de  explicar fenómenos complejos presentes en la vida cotidiana de forma satisfactoria.

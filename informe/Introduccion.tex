@@ -1,0 +1,9 @@
+\section{Introducción}
+
+La capacidad de predecir el comportamiento de ciertos fenómenos que nos rodean es de gran interés en muchos ámbitos. Ejemplos de estos fenómenos incluyen la meteorología o el análisis financiero, entre otros. Uno puede formalizar estas ideas, y plantear este problema como, dado un conjunto de variables independientes (a las cuales se las conoce como features o predictores), estimar una variable dependiente. Sobre este concepto se construye lo que se conoce como \textbf{Regression Analysis}. Esta busca estimar las relaciones entre una variable dependiente (la que se quiere predecir) y una o más variables independientes (los predictores), lo que se busca con este tipo de análisis es poder inferir relaciones entre las variables observacionales.
+
+Para llevar a cabo el análisis por regresión se debe construir un modelo de regresión, que puede ser muy simple, o involucrar cosas mas sofisticadas. Un caso simple de regresión es el de una regresión lineal, que involucra una función lineal, o por otro lado, una regresión mas compleja que involucra polinomios, funciones logarítmicas o exponenciales. 
+
+Una vez que se tiene decidido el tipo de modelo a utilizar, se lo debe ``ajustar" (fitting) lo mejor posible a los datos para que los describa de la mejor manera posible. Esto ultimo puede hacerse, por ejemplo, a través del método de CML (Cuadrados Mínimos Lineales).
+
+Nuestro objetivo fue aplicar \textit{Regression Analysis} sobre datos de inmuebles, y en particular, establecer una relación entre el precio y las características de la propiedad, como la cantidad de habitaciones, baños, sus metros cubiertos, etc. Comparamos distintos modelos, como regresor lineal y polinomial, bajo distintas métricas, para ver que opción era mejor, utilizando el método de CML para el fitting de los mismos.
